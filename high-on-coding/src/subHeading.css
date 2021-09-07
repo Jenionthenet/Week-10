@@ -1,0 +1,18 @@
+.subHeadingDiv {
+    background-color: #dddee0;
+    padding: 0 15px 15px;
+
+    width: 65%;
+    margin: auto;
+   
+}
+
+#title {
+    color: #555960;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+#content {
+    font-weight: 500;
+}

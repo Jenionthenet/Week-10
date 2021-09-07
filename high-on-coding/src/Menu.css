@@ -1,0 +1,23 @@
+.menuDiv {
+    color: white;
+    background-color: #52a7fa;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    width: 70%;
+    margin: auto;
+
+    
+}
+
+#menuTitle {
+    font-size: 2.5rem;
+}
+#home {
+    margin-left: 50px;
+}
+
+#categories {
+    font-weight: 200;
+    margin-left: 50px;
+}
