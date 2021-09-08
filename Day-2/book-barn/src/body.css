@@ -1,0 +1,39 @@
+#popBooks {
+    margin: 150px 0 0 110px;
+    /* margin-top: 140px;
+    margin-left: 110px; */
+    color: #1e4e61;
+    font-size: 3rem;
+
+    
+
+}
+
+ul {
+    width: 80%;
+    margin: auto;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+         
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 40px;
+    width: 300px;
+}
+
+#coverImg {
+    height:400px; 
+}
+
+#bookTitle {
+    font-size: 1.75rem;
+    color: #1e4e61;
+    margin-bottom: 5px;
+
+}

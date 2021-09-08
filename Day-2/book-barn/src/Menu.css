@@ -1,0 +1,71 @@
+#menu  {
+    display: flex;
+    background-color: rgb(163, 207, 236);
+    position: fixed;
+    margin-top: 0;
+    height: 120px;
+    align-items: center;
+    width: 100%;
+    color: white;
+    
+    top:0px;
+}
+
+
+#titleDiv {
+    background-color: cadetblue;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 5px 20px;
+    margin-left: 30px;
+    color: white;
+    align-items: center;
+    width: 250px;
+    font-size: 1.50rem;
+    
+}
+
+#home {
+    margin-left: 40px;
+}
+
+#browse {
+    margin-left: 40px;
+}
+#searchBx {
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    margin-left: 40px;
+    width: 300px;
+    font-size: 1.25rem;
+}
+
+#submitBtn {
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: cadetblue;
+    margin-left: 20px;
+    width: 100px;
+    color: white;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+#logIn {
+    position: absolute;
+    right: 180px
+}
+
+#signUp {
+    position: absolute;
+    right: 40px;
+
+}
+
+
+
