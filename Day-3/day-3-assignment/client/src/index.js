@@ -7,6 +7,8 @@ import HomePage from './components/HomePage';
 import AddBookPage from './components/AddBookPage'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import BaseLayout from './components/BaseLayout';
+import LoginPage from './components/LoginPage';
+import RegistrationPage from './components/RegistrationPage'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +18,8 @@ ReactDOM.render(
          <Route exact path = "/" component = {HomePage}/>
           <Route path="/books" component = {BookListPage} />
           <Route  path="/add-book" component = {AddBookPage} />
+          <Route path = '/login' component = {LoginPage}/>
+          <Route path = '/register' component = {RegistrationPage}/>
         </Switch>
      
       </BaseLayout>

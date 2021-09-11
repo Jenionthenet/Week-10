@@ -10,6 +10,8 @@ class Menu extends Component {
                 <NavLink to = "/"><div id="home">Home</div></NavLink>
                 <NavLink to = "/books"><div id="books">Books</div></NavLink>
                 <NavLink to = "/add-book"><div id="addBook">Add Book</div></NavLink>
+                <NavLink to = "/login"><div id ="login">Log In</div></NavLink>
+                <NavLink to = "/register"><div id= "register">Register</div></NavLink>
             </div>
         )
     }
