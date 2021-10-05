@@ -7,7 +7,7 @@ function FavoritesList(props) {
             <h2>{book.title}</h2>
                 <h3>{book.author}</h3>
                 <h4>{book.isbn}</h4>
-                <img src={book.coverImageUrl} />
+                <img src={book.cover_image_url} />
 
         </li>
     })

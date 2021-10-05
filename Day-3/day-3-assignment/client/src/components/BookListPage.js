@@ -1,38 +1,38 @@
-import  { Component } from 'react';
-import { render } from 'react-dom';
+
 import BookList from "./BookList";
-
-class BookListPage extends Component {
-
-    constructor() {
-        super()
-
-        this.state = {
-            books: []
-        }
-    }
-
-    componentDidMount() {
-        this.getAllBooks()
-    }
-
-    getAllBooks = () => {
-        fetch('http://localhost:8080/books')
-        .then(response => response.json())
-        .then(books => {
-            this.setState({
-                books: books
-            })
-        })
-    }
+import { useEffect } from 'react';
+import { connect, useSelector } from 'react-redux'
+import * as actionTypes from '../store/actions/actionTypes'
+import * as actionCreators from '../store/creators/actionCreators'
 
 
-render() {
+function BookListPage(props) {
+
+   
+    useEffect(() => {
+        props.onFetchBooks()
+    }, [])
+
+
+   
+        
     return (
-        <BookList books = {this.state.books}/>
-    )
-}
+        <div>
+            <h1>Book List </h1>
+            <BookList />
+        </div>
+    );
 
 }
 
-export default BookListPage
+
+
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        onFetchBooks: () => dispatch(actionCreators.fetchBooks())
+    }
+}
+console.log(mapDispatchToProps)
+export default connect(null, mapDispatchToProps)(BookListPage);

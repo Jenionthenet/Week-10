@@ -2,12 +2,12 @@ import { connect } from 'react-redux'
 
 function CartList(props) {
 
-    const cartItems = props.cartBooks.map((book, index) => {
-        return <li key = {index}>
+    const cartItems = props.cartBooks.map((book) => {
+        return <li key = {book.id}>
                 <h2>{book.title}</h2>
                 <h3>{book.author}</h3>
                 <h4>{book.isbn}</h4>
-                <img src={book.coverImageUrl} />
+                <img src={book.cover_image_url} />
                
 
             </li>

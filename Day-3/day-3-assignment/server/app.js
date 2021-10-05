@@ -2,9 +2,13 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const models = require('./models')
+const jwt = require('jsonwebtoken')
 global.bcrypt = require('bcryptjs')
+const authenticate = require('./middleware/authentication')
 
 const registerRouter = express('./routes/register')
+
+require('dotenv').config()
 
 app.use(cors())
 app.use(express.json())
@@ -13,45 +17,53 @@ app.use(express.json())
 
 // app.use('/register', registerRouter)
 
-const books = [
-    {title: 'This One Summer', author: "Mariko Tamaki & Jillian Tamaki", isbn: "159643774X", coverImageUrl: "https://images-na.ssl-images-amazon.com/images/I/81Fs6+n4aqL.jpg"},
 
-    {title: "Apprenticed to Venus: My Years with Anaïs Nin", author: "Tristine Rainer", isbn: "1948924196", coverImageUrl: "https://images-na.ssl-images-amazon.com/images/I/61IpScsdZvL.jpg" },
-    {title: "The Orphan Master's Son: A Novel ", author: "Adam Johnson", isbn: "B006VPAT5O", coverImageUrl: "https://m.media-amazon.com/images/I/51Co0FZd6bL.jpg" }
-]
 
-app.get('/books', (req, res) => {
-    res.json(books)
+app.get('/books', authenticate, (req, res) => {
+    models.Book.findAll().then(books => {
+        res.json(books)
+    })
+    
 })
 
 
-app.post('/books' , (req, res) => {
+app.post('/books', (req, res) => {
     const title = req.body.title
     const author = req.body.author
     const isbn = req.body.isbn
     const coverImageUrl = req.body.coverImageUrl
-    const userId = 1
+   
 
     const book = models.Book.build({
         title: title, 
         author: author, 
         isbn: isbn, 
-        cover_image_url: coverImageUrl,
-        user_id: userId
+        cover_image_url: coverImageUrl
+       
 
     })
     
 
-    books.push(book)
-    res.json({success: true, message: 'Book has been added!'})
-
-
-
-
-
-    // res.redirect("http://localhost:3000/books")
+    book.save()
+        .then(savedBook => {
+        res.json({success: true, bookId: savedBook.id})
+    })
+   
 })
 
+
+app.delete('/books/:bookId', (req, res) => {
+    
+    const bookId = parseInt(req.params.bookId)
+
+    models.Book.destroy({
+        where: {
+            id: bookId
+        }
+    }).then(books => {
+        res.json({success: true})
+    })
+})
 
 
 app.post('/register', (req, res) => {
@@ -88,15 +100,17 @@ app.post('/login', (req, res) => {
 
     console.log(username, password)
 
-    models.User.findOne({ where: {username: username}})
+    models.User.findAll({ where: {username: username}})
 
     .then((user) => {
-        bycrpt.compare(password, user.password, function(err, result) {
+        bcrypt.compare(password, user.password, function(err, result) {
             if(result ==false) {
-            res.json({message:"invalid username or password"} )
+            res.json({loggedIn: false, message:"invalid username or password"} )
 
             } else{
-                res.json(user)
+                const token = jwt.sign({username: username}, process.env.JWT_SECRET_KEY)
+                res.json({loggedIn: true, token: token}) 
+                
             }
         })
     })

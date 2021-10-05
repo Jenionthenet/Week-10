@@ -2,7 +2,9 @@ import * as actionTypes from './actions/actionTypes'
 
 const initialState = {
     cartBooks: [],
-    favBooks: []
+    favBooks: [],
+    posts: [],
+    books: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +20,20 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 favBooks: state.favBooks.concat(action.payload)
             }
+
+        case actionTypes.POSTS_LOADED:
+            return {
+                ...state,
+                posts: action.payload
+
+            }
+        
+        case actionTypes.BOOKS_LOADED:
+            return {
+                ...state,
+                books: action.payload
+            }
+
         default:
             return state
 }

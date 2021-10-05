@@ -9,15 +9,17 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import BaseLayout from './components/BaseLayout';
 import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage'
-import { createStore } from 'redux'
+import { applyMiddleware, compose, createStore } from 'redux'
 import reducer from './store/reducer'
 import CartList from './components/CartList';
 import { Provider } from 'react-redux'
 import FavoritesList from './components/FavoritesList';
+import thunk from 'redux-thunk'
+import App from './App';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose;
 
-
-const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,9 +27,10 @@ ReactDOM.render(
     <BrowserRouter>
       <BaseLayout>
         <Switch>
-         <Route exact path = "/" component = {HomePage}/>
+          
+         <Route exact path = "/" component = {App}/>
           <Route path="/books" component = {BookListPage} />
-          <Route  path="/add-book" component = {AddBookPage} />
+          <Route path="/add-book" component = {AddBookPage} />
           <Route path="/cart" component = {CartList}/>
           <Route path="/favorites" component = {FavoritesList}/>
           <Route path = '/login' component = {LoginPage}/>

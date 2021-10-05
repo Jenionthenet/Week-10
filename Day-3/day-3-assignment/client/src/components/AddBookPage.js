@@ -1,62 +1,54 @@
-import { Component } from "react";
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import * as actionCreators from '../store/creators/actionCreators'
 
 
-class AddBookPage extends Component {
+function AddBookPage(props) {
 
-    constructor() {
-        super()
-        this.state = {
-            title: "",
-            author: "",
-            isbn: "",
-            coverImageUrl: ""
-        }
-    }
+   const [book, setBook] = useState({})
 
-    handleOnChange = (e) => {
-        this.setState({
+   const  handleOnChange = (e) => {
+        
+    setBook({
+            ...book,
             [e.target.name]: e.target.value
         })
     }
 
-    handleSave = () => {
-        console.log( this.state.title,
-            this.state.author,
-             this.state.isbn,
-             this.state.coverImageUrl)
+    const handleSave = () => {
+      
         fetch('http://localhost:8080/books', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                title: this.state.title,
-                author: this.state.author,
-                isbn: this.state.isbn,
-                coverImageUrl: this.state.coverImageUrl
-            })
+            body: JSON.stringify(book)
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    this.props.history.push('/books')
+                    props.onBooksLoaded()
                 }
             })
     }
 
-    render() {
+    
         return (
             <div>
                 <h1>Add Book</h1>
-                <input type="text" onChange={this.handleOnChange} placeholder="Enter book title" name="title" />
-                <input type="text" onChange={this.handleOnChange} placeholder="Enter author"
+                <input type="text" onChange={handleOnChange} placeholder="Enter book title" name="title" />
+                <input type="text" onChange={handleOnChange} placeholder="Enter author"
                     name="author" />
-                <input type="text" onChange={this.handleOnChange} placeholder="Enter book isbn" name="isbn" />
-                <input type="text" onChange={this.handleOnChange} placeholder="Enter book cover URL" name="coverImageUrl" />
-                <button onClick={this.handleSave}>Submit</button>
+                <input type="text" onChange={handleOnChange} placeholder="Enter book isbn" name="isbn" />
+                <input type="text" onChange={handleOnChange} placeholder="Enter book cover URL" name="coverImageUrl" />
+                <button onClick={handleSave}>Submit</button>
             </div>
         )
     }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onBooksLoaded: () => dispatch(actionCreators.fetchBooks())
+    }
 }
 
-export default AddBookPage
+export default connect(null, mapDispatchToProps)(AddBookPage)
