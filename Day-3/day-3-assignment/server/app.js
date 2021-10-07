@@ -19,7 +19,7 @@ app.use(express.json())
 
 
 
-app.get('/books', authenticate, (req, res) => {
+app.get('/books',authenticate, (req, res) => {
     models.Book.findAll().then(books => {
         res.json(books)
     })
@@ -94,27 +94,60 @@ app.post('/register', (req, res) => {
 
 })
 
+// app.post('/login', (req, res) => {
+//     const username = req.body.username
+//     const password = req.body.password
+
+//     console.log(username, password)
+
+//      models.User.findAll({ where: {username: username}})
+
+//     .then((user) => {
+//         bcrypt.compare(password, user.password, function(err, result) {
+//             if(result == false) {
+
+//                 res.json({loggedIn: false, message:"invalid username or password"} )
+            
+
+//             } else{
+                
+//                 const token = jwt.sign({username: username}, process.env.JWT_SECRET_KEY)
+//                 res.json({loggedIn: true, token: token}) 
+//             }
+//         })
+//     })
+// })
+
+
 app.post('/login', (req, res) => {
     const username = req.body.username
     const password = req.body.password
 
     console.log(username, password)
 
-    models.User.findAll({ where: {username: username}})
-
-    .then((user) => {
+     models.User.findOne({ 
+         where: {
+             username: username
+            }
+    }).then((user) => {
+        if (user==null) {
+            res.json ({success: false, message: "username not defined"})
+        }
         bcrypt.compare(password, user.password, function(err, result) {
-            if(result ==false) {
-            res.json({loggedIn: false, message:"invalid username or password"} )
-
-            } else{
+            if(result) {
                 const token = jwt.sign({username: username}, process.env.JWT_SECRET_KEY)
                 res.json({loggedIn: true, token: token}) 
+                     
+
+            } else{
+                res.json({loggedIn: false, message:"invalid username or password"} )
                 
             }
         })
     })
 })
+
+
 
 app.listen(8080, () => {
     console.log("Server is running...")

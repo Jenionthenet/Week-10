@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react'
-import  { useHistory } from 'react-router'
+import { connect } from 'react-redux'
 
 function LoginPage(props) {
 
-    const history = useHistory()
+
     const [user, setUser] = useState({
 
         username: "",
@@ -34,9 +35,9 @@ function LoginPage(props) {
         .then(result => {
             localStorage.setItem('jsonwebtoken', result.token)
             console.log(result)
-            if(result.success){
-
-          history.push('/')
+            if(result.loggedIn == true){
+              props.onLogin()
+                props.history.push('/')
             }else {
             setMessage(result.message)
             }
@@ -53,13 +54,19 @@ function LoginPage(props) {
         <div> 
             <h1>Login</h1>
             <input type = "text" name = "username" onChange = {handleLoginChange} placeholder = "Enter username"/>
-            <input type = "password" name = "password" onChange = {handleLoginChange} placeholer = "Enter password"/>
+            <input type = "password" name = "password" onChange = {handleLoginChange} placeholder = "Enter password"/>
+            {/* <p>{result.message}</p> */}
             <button onClick= {handleLoginButton}>Log In</button>
            
         </div>
     )
-
-
-
 }
- export default LoginPage
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onLogin: () => dispatch({type: 'ON_LOGIN'})
+    }
+}
+
+
+ export default connect(null, mapDispatchToProps)(LoginPage)

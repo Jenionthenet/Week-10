@@ -1,17 +1,17 @@
 
 import BookList from "./BookList";
-import { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux'
-import * as actionTypes from '../store/actions/actionTypes'
-import * as actionCreators from '../store/creators/actionCreators'
+// import { useEffect } from 'react';
+// import { connect, useSelector } from 'react-redux'
+// import * as actionTypes from '../store/actions/actionTypes'
+// import * as actionCreators from '../store/creators/actionCreators'
 
 
 function BookListPage(props) {
 
    
-    useEffect(() => {
-        props.onFetchBooks()
-    }, [])
+    // useEffect(() => {
+    //     props.onFetchBooks()
+    // }, [])
 
 
    
@@ -28,11 +28,11 @@ function BookListPage(props) {
 
 
 
-const mapDispatchToProps = (dispatch) => {
+// const mapDispatchToProps = (dispatch) => {
 
-    return {
-        onFetchBooks: () => dispatch(actionCreators.fetchBooks())
-    }
-}
-console.log(mapDispatchToProps)
-export default connect(null, mapDispatchToProps)(BookListPage);
+//     return {
+//         onFetchBooks: () => dispatch(actionCreators.fetchBooks())
+//     }
+// }
+// console.log(mapDispatchToProps)
+export default BookListPage

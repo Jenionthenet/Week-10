@@ -16,10 +16,23 @@ import { Provider } from 'react-redux'
 import FavoritesList from './components/FavoritesList';
 import thunk from 'redux-thunk'
 import App from './App';
+import requireAuth from './components/requireAuth';
+import Logout from './components/Logout';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose;
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+const store = createStore(reducer, composeEnhancers(
+  applyMiddleware(thunk)
+))
+
+const token = localStorage.getItem('jsonwebtoken')
+if(token) {
+  //dispatch an action and update the global state
+  store.dispatch({type: 'ON_LOGIN'})
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,12 +42,13 @@ ReactDOM.render(
         <Switch>
           
          <Route exact path = "/" component = {App}/>
-          <Route path="/books" component = {BookListPage} />
-          <Route path="/add-book" component = {AddBookPage} />
-          <Route path="/cart" component = {CartList}/>
-          <Route path="/favorites" component = {FavoritesList}/>
+          <Route path="/books" component = {requireAuth(BookListPage)} />
+          <Route path="/add-book" component = {requireAuth(AddBookPage)} />
+          <Route path="/cart" component = {requireAuth(CartList)}/>
+          <Route path="/favorites" component = {requireAuth(FavoritesList)}/>
           <Route path = '/login' component = {LoginPage}/>
           <Route path = '/register' component = {RegistrationPage}/>
+          <Route path = "/sign-out" component = {Logout}/>
         </Switch>
      
       </BaseLayout>

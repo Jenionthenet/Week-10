@@ -4,7 +4,8 @@ const initialState = {
     cartBooks: [],
     favBooks: [],
     posts: [],
-    books: []
+    books: [], 
+    isAuthenticated: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +33,19 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 books: action.payload
+            }
+        
+        case actionTypes.ON_LOGIN:
+            return {
+                ...state,
+                isAuthenticated: true
+            }
+
+        case actionTypes.ON_LOGOUT:
+            return {
+                ...state,
+                isAuthenticated: false
+
             }
 
         default:

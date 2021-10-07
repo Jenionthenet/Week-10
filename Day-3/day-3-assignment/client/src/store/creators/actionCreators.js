@@ -30,14 +30,14 @@ export const fetchBooks = () => {
     return (dispatch) => {
        fetch('http://localhost:8080/books', {
            method: 'GET',
-           hearders: {
-               'Autorization': `Bearer ${token}`
+           headers: {
+               'Authorization': `Bearer ${token}`
            }
        })
        .then(response => response.json())
        .then(books => {
            dispatch({type: actionTypes.BOOKS_LOADED, 
-            payload: [books]})
+            payload: books})
        })
         
     

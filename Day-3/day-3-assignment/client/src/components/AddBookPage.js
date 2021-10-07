@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { connect } from 'react-redux'
-import * as actionCreators from '../store/creators/actionCreators'
+
 
 
 function AddBookPage(props) {
@@ -26,7 +25,7 @@ function AddBookPage(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    props.onBooksLoaded()
+                    props.history.push('/books')
                 }
             })
     }
@@ -45,10 +44,5 @@ function AddBookPage(props) {
         )
     }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onBooksLoaded: () => dispatch(actionCreators.fetchBooks())
-    }
-}
 
-export default connect(null, mapDispatchToProps)(AddBookPage)
+export default AddBookPage

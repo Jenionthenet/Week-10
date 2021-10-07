@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const models = require('../models')
 
 function authenticate(req, res, next) {
 
@@ -8,7 +9,12 @@ function authenticate(req, res, next) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
         if(decoded) {
             const username = decoded.username
-            const authUser = user.find(user => user.username == username)
+            // const authUser = user.find(user => user.username == username)
+            const authUser =
+            models.User.findOne({ 
+                where: {
+                    username: username
+                   } })
             if(authUser) {
                 next()
             } else {
@@ -18,7 +24,7 @@ function authenticate(req, res, next) {
             res.json({error: 'Unable to authenticate'})
         }
     } else {
-        res.json({error: 'Requied headers are missing...'})
+        res.json({error: 'Required headers are missing...'})
     }
 }
 
